@@ -1,0 +1,21 @@
+{
+  "name": "olive-cms/colorconsole",
+  "description": "php colorconsole",
+  "type": "library",
+  "keywords": ["tools"],
+  "require": {
+      "php": ">=5.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Olive\\Tools\\": "src/"
+    }
+  },
+  "license": "MIT",
+  "authors": [{
+    "name": "Mehdi HosseinZade",
+    "email": "arshen@outlook.com",
+    "homepage": "https://arshen.ir",
+    "role": "Developer"
+  }]
+}
