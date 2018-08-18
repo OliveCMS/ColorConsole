@@ -7,51 +7,54 @@ namespace Olive\Tools;
  */
 class ColorConsole
 {
-    // italic and blink may not work depending of your terminal
-    private const styles = [
-        'reset' => '0',
-        'bold' => '1',
-        'dark' => '2',
-        'italic' => '3',
-        'underline' => '4',
-        'blink' => '5',
-        'reverse' => '7',
-        'concealed' => '8',
-        'default' => '39',
-        'black' => '30',
-        'red' => '31',
-        'green' => '32',
-        'yellow' => '33',
-        'blue' => '34',
-        'magenta' => '35',
-        'cyan' => '36',
-        'light_gray' => '37',
-        'dark_gray' => '90',
-        'light_red' => '91',
-        'light_green' => '92',
-        'light_yellow' => '93',
-        'light_blue' => '94',
-        'light_magenta' => '95',
-        'light_cyan' => '96',
-        'white' => '97',
-        'bg_default' => '49',
-        'bg_black' => '40',
-        'bg_red' => '41',
-        'bg_green' => '42',
-        'bg_yellow' => '43',
-        'bg_blue' => '44',
-        'bg_magenta' => '45',
-        'bg_cyan' => '46',
-        'bg_light_gray' => '47',
-        'bg_dark_gray' => '100',
-        'bg_light_red' => '101',
-        'bg_light_green' => '102',
-        'bg_light_yellow' => '103',
-        'bg_light_blue' => '104',
-        'bg_light_magenta' => '105',
-        'bg_light_cyan' => '106',
-        'bg_white' => '107',
-    ];
+    public static function styles()
+    {
+        // italic and blink may not work depending of your terminal
+        return [
+          'reset' => '0',
+          'bold' => '1',
+          'dark' => '2',
+          'italic' => '3',
+          'underline' => '4',
+          'blink' => '5',
+          'reverse' => '7',
+          'concealed' => '8',
+          'default' => '39',
+          'black' => '30',
+          'red' => '31',
+          'green' => '32',
+          'yellow' => '33',
+          'blue' => '34',
+          'magenta' => '35',
+          'cyan' => '36',
+          'light_gray' => '37',
+          'dark_gray' => '90',
+          'light_red' => '91',
+          'light_green' => '92',
+          'light_yellow' => '93',
+          'light_blue' => '94',
+          'light_magenta' => '95',
+          'light_cyan' => '96',
+          'white' => '97',
+          'bg_default' => '49',
+          'bg_black' => '40',
+          'bg_red' => '41',
+          'bg_green' => '42',
+          'bg_yellow' => '43',
+          'bg_blue' => '44',
+          'bg_magenta' => '45',
+          'bg_cyan' => '46',
+          'bg_light_gray' => '47',
+          'bg_dark_gray' => '100',
+          'bg_light_red' => '101',
+          'bg_light_green' => '102',
+          'bg_light_yellow' => '103',
+          'bg_light_blue' => '104',
+          'bg_light_magenta' => '105',
+          'bg_light_cyan' => '106',
+          'bg_white' => '107',
+      ];
+    }
 
     public static function render($string = '', $option = [])
     {
@@ -130,15 +133,15 @@ class ColorConsole
         }
 
         $style = strtolower($style);
-
-        if (array_key_exists($style, self::styles)) {
-            return self::buildEscSeq(self::styles[$style]) . $text . self::buildEscSeq(self::styles['reset']);
+        $styles = self::styles();
+        if (array_key_exists($style, $styles)) {
+            return self::buildEscSeq($styles[$style]) . $text . self::buildEscSeq($styles['reset']);
         }
 
         if (preg_match('/^((?:bg_)?)color\[([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\]$/', $style, $matches)) {
             $option = $matches[1] == 'bg_' ? 48 : 38;
 
-            return self::buildEscSeq("{$option};5;{$matches[2]}") . $text . self::buildEscSeq(self::styles['reset']);
+            return self::buildEscSeq("{$option};5;{$matches[2]}") . $text . self::buildEscSeq($styles['reset']);
         }
 
         throw new \Exception("Invalid style $style");
@@ -151,6 +154,7 @@ class ColorConsole
 
     private static function center($text, $width = 80)
     {
+        $centered = '';
         foreach (explode(PHP_EOL, $text) as $line) {
             $line = trim($line);
             $lineWidth = strlen($line) - mb_strlen($line, 'UTF-8') + $width;
