@@ -25,7 +25,7 @@ If you do not use Composer, you can grab the code from GitHub, and use any PSR-0
 require_once 'vendor/autoload.php';
 use Olive\Tools\ColorConsole;
 
-ColorConsole::render(
+echo ColorConsole::render(
   'Your Message',
   [
     'color' => 'magenta',

@@ -16,7 +16,7 @@ $ composer require olive-cms/colorconsole
 require_once 'vendor/autoload.php';
 use Olive\Tools\ColorConsole;
 
-ColorConsole::render(
+echo ColorConsole::render(
   'Your Message',
   [
     'color' => 'magenta',
